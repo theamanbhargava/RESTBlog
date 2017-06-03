@@ -38,7 +38,6 @@ TODO :
 * Add email verification
 * Add email notifications
 
-
 Packages/frameworks used :
 ----
 * mongoose

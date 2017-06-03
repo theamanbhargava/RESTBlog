@@ -1,2 +1,42 @@
-<%include ./partials/header.ejs%>
-<%include ./partials/footer.ejs%>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog App</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.css" />
+    <link rel="icon" href="/assets/favicon.png">
+    <link href="assets/landing.css" type="text/css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-git2.min.js"></script>
+    <style>
+        a:hover { background-color: gold; }
+    </style>
+</head>
+<body>
+<div id="navbar" class="ui fixed inverted menu">
+    <div class="ui container">
+        <div class="header item">
+            <i class="code icon"></i>
+            Blog Site
+        </div>
+        <a href="/" class="item">Home</a>
+        <a href="/blogs" class="item">Blogs</a>
+        <% if(!currentUser){ %>
+        <a href="/login" class="pull right item">Login</a>
+        <a href="/register" class="item">Register</a>
+        <% }else if(currentUser.isAdmin){ %>
+        <a href="/blogs/new" class="item pull right">New Post</a>
+        <a href="/logout" class="item">Logout</a>
+        <% }else{ %>
+        <a href="/logout" class="item pull right">Logout</a>
+        <%}%>
+    </div>
+</div>
+<div class="body">
+    <div class="content">
+        <div class="row">
+            <h1>Get started!</h1>
+            <hr>
+            <a style="color: azure" href="/blogs"><i class="huge hourglass start icon"></i></a>
+        </div>
+    </div>
+    <script src="scripts/background.js"></script>
+<%include ./partials/footer.ejs %>

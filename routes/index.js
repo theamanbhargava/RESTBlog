@@ -7,10 +7,6 @@ var express = require("express"),
 	User = require("../models/user"),
 	middleware = require("../middelware");
 
-router.get("/", function (req, res) {
-	res.render("landing");
-});
-
 // show register form
 router.get("/register", function (req, res) {
 	res.render("register");

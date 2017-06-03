@@ -19,7 +19,8 @@ var express     = require("express"),
 var blogRoutes = require("./routes/blog"),
 	indexRoutes = require("./routes/index"),
 	commentRoutes = require("./routes/comments");
-
+	landingRoutes = require("./routes/landing");
+	
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended : true}));
@@ -50,6 +51,8 @@ app.use(function (req, res, next) {
 	res.locals.error = req.flash('error');
 	next();
 });
+
+app.use("/", landingRoutes);
 
 //INDEX ROUTES
 app.use("/", indexRoutes);
