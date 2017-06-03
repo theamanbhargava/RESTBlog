@@ -3,6 +3,7 @@
  */
 var express = require("express");
 var router  = express.Router();
+var middleware = require("../middelware/index.js");
 var Blog = require("../models/blog");
 
 router.get("/", function (req, res) {
@@ -15,13 +16,13 @@ router.get("/", function (req, res) {
 	});
 });
 
-router.get("/new", function (req, res) {
+router.get("/new", middleware.isLoggedIn, function (req, res) {
 	res.render("new");
 });
 
 //SHOW ROUTE
 router.get("/:id", function (req, res) {
-	Blog.findById(req.params.id, function (err, foundBlog) {
+	Blog.findById(req.params.id).populate("comments").exec(function (err, foundBlog) {
 		if(err){
 			res.redirect("/blogs");
 		}else{
@@ -31,9 +32,18 @@ router.get("/:id", function (req, res) {
 });
 
 //CREATE ROUTE
-router.post("/", function (req, res) {
+router.post("/", middleware.isLoggedIn, function (req, res) {
 	req.body.blog.body = req.sanitize(req.body.blog.body);
-	Blog.create(req.body.blog, function (err, newBlog) {
+	var title = req.body.blog.title,
+		image = req.body.blog.image,
+		body = req.body.blog.body;
+	
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	};
+	var newBlog = {title: title, image: image, body: body, author: author};
+	Blog.create(newBlog, function (err, newBlog) {
 		if(err){
 			res.render("new");
 		}
@@ -45,7 +55,7 @@ router.post("/", function (req, res) {
 
 /*EDIT ROUTE
  * Shows edit form*/
-router.get("/:id/edit", function (req, res) {
+router.get("/:id/edit", middleware.checkUserBlog, function (req, res) {
 	Blog.findById(req.params.id, function (err, foundBlog) {
 		if(err){
 			res.redirect("/blogs");
@@ -59,7 +69,7 @@ router.get("/:id/edit", function (req, res) {
  UPDATE ROUTE
  Creates route for the update as a put request
  */
-router.put("/:id", function (req, res) {
+router.put("/:id", middleware.checkUserBlog, function (req, res) {
 	req.body.blog.body = req.sanitize(req.body.blog.body);
 	Blog.findByIdAndUpdate(req.params.id, req.body.blog, function (err, updatedBlog) {
 		if(err){
@@ -72,7 +82,7 @@ router.put("/:id", function (req, res) {
 });
 
 //DELETE ROUTE
-router.delete("/:id", function (req, res) {
+router.delete("/:id", middleware.checkUserBlog, function (req, res) {
 	Blog.findByIdAndRemove(req.params.id, function (err) {
 		if(err){
 			console.log(err);

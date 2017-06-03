@@ -15,10 +15,44 @@
             <form method="POST" action="/blogs/<%=blog._id%>"></form>
         </div>
     </div>
+    <% if(currentUser && blog.author.id.equals(currentUser._id) ){ %>
     <a class="ui orange basic button" href="/blogs/<%=blog._id%>/edit">Edit</a>
     <form id="delete" action="/blogs/<%=blog._id%>?_method=DELETE" method="POST">
         <button class="ui red basic button">Delete</button>
     </form>
-
+    <% } %>
+</div>
+<div class="ui main text container segment">
+    <div class="comments">
+        <h3 class="ui dividing header">Comments</h3>
+        <% blog.comments.forEach(function(comment){ %>
+        <div class="ui segment">
+            <div class="ui comments">
+                <div class="comment">
+                    <div class="content">
+                        <h2 style="display: inline"><a class="author"><em><%= comment.author.username %> </em></a>says :
+                        </h2>
+                        <div class="metadata">
+                            <div class="date"><%= comment.created.toDateString() %></div>
+                        </div>
+                        <div class="text">
+                            <%- comment.text %>
+                        </div>
+                    </div>
+                </div>
+                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                <a class="ui orange basic button"
+                   href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                <form id="delete" action="/blogs/<%= blog._id %>?_method=DELETE" method="POST">
+                    <button class="ui red basic button">Delete</button>
+                </form>
+                <% } %>
+            </div>
+        </div>
+        <% }) %>
+        <div class="text-right">
+            <a class="btn btn-success" href="/blogs/<%= blog._id %>/comments/new">Add New Comment</a>
+        </div>
+    </div>
 </div>
 <%include ./partials/footer%>
