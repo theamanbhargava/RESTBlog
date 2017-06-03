@@ -13,7 +13,7 @@ var express     = require("express"),
 	bodyParser  = require("body-parser"),
 	expressSanitizer = require("express-sanitizer"),
 	methodOverride = require("method-override");
-	mongoose.connect("mongodb://localhost/restful_blog_app_v2");
+	mongoose.connect("mongodb://localhost/restful_blog_app_v3");
 	
 //Require routes
 var blogRoutes = require("./routes/blog"),
