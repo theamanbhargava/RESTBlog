@@ -1,8 +1,8 @@
 <% include ./partials/header %>
 <div class="container">
-    <div class="row">
+    <div class="ui main text container segment">
         <h1 style="text-align: center">Login</h1>
-        <div style="width: 30%; margin: 25px auto;">
+        <div class="ui huged header" style="width: 30%; margin: 25px auto;">
             <form class="ui form" action="/login" method="post">
                 <div class="field">
                     <input class="form-control" type="text" name="username" placeholder="username">
@@ -11,7 +11,7 @@
                     <input class="form-control" type="password" name="password" placeholder="password">
                 </div>
                 <div class="field">
-                    <button class="btn btn-lg btn-primary btn-block">Login</button>
+                    <button class="ui big green inverted button">Login</button>
                 </div>
             </form>
             <a href="/blogs">Go Back</a>

@@ -13,13 +13,16 @@
                 Blog Site
             </div>
             <a href="/" class="item">Home</a>
+            <a href="/blogs" class="item">Blogs</a>
             <% if(!currentUser){ %>
             <a href="/login" class="pull right item">Login</a>
             <a href="/register" class="item">Register</a>
-            <% }else{ %>
+            <% }else if(currentUser.isAdmin){ %>
             <a href="/blogs/new" class="item pull right">New Post</a>
             <a href="/logout" class="item">Logout</a>
-            <% } %>
+            <% }else{ %>
+                <a href="/logout" class="item pull right">Logout</a>
+            <%}%>
         </div>
     </div>
     <div class="body">

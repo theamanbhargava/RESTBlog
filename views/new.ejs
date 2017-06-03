@@ -4,20 +4,18 @@
     <form  class="ui form" action="/blogs" method="POST">
         <div class="field">
             <label>Title</label>
-            <input type="text" name="blog[title]" placeholder="title">
+            <input type="text" name="blog[title]" placeholder="Title">
         </div>
         <div class="field">
-            <label>image url</label>
-            <input type="text" name="blog[image]" placeholder="image">
+            <label>Main Image Url</label>
+            <input type="text" name="blog[image]" placeholder="Image">
         </div>
         <div class="field">
             <label>Blog Content</label>
-            <textarea name="blog[body]" placeholder="post goes here">
+            <textarea name="blog[body]" placeholder="Style with html tags">
             </textarea>
         </div>
-
         <input class="ui big violet inverted button" type="submit">
-
     </form>
 </div>
 <%include ./partials/footer%>

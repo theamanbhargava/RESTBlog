@@ -10,14 +10,11 @@ var express     = require("express"),
 	session = require("express-session"),
 	User = require("./models/user"),
 	flash = require("connect-flash"),
-	bodyParser  = require("body-parser");
+	bodyParser  = require("body-parser"),
+	expressSanitizer = require("express-sanitizer"),
 	methodOverride = require("method-override");
-mongoose.connect("mongodb://localhost/restful_blog_app_v1");
-	expressSanitizer = require("express-sanitizer");
-var seedDB = require("./seeds"),
-	Blog = require("./models/blog"),
-	Comment = require("./models/comments");
-
+	mongoose.connect("mongodb://localhost/restful_blog_app_v2");
+	
 //Require routes
 var blogRoutes = require("./routes/blog"),
 	indexRoutes = require("./routes/index"),
@@ -40,8 +37,6 @@ app.use(require("express-session")({
 	saveUninitialized: false
 }));
 
-// seedDB();
-
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -56,13 +51,15 @@ app.use(function (req, res, next) {
 	next();
 });
 
-//INDEX ROUTE
+//INDEX ROUTES
 app.use("/", indexRoutes);
 
+//BLOG ROUTES
 app.use("/blogs", blogRoutes);
 
+//COMMENT PUT, POST AND DELETE ROUTES
 app.use("/blogs/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT || 3000, process.env.IP, function () {
 	console.log("Server is running on port " + process.env.PORT);
 });
